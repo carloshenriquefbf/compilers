@@ -1,0 +1,17 @@
+Teste 1: if ( a5 > $bba + _1 )
+Teste 2: a$ $$ $ $_$
+Teste 3: 1 1.0 1.1 2.000001 10e-9 10.34e+9 0.4e31
+Teste 4: if( $_a >= 1e-5 )
+Teste 5: a = "Um texto";
+Teste 6: $ = "Uma String" "outra\t string" "d'ouro";
+Teste 7: a = "Um \"texto" 'd\'agua' 'd''ouro " ""';
+Teste 8: a = "Um ""texto \o/ //\\/* */" ;
+`  string ' "/*" '
+*/ //
+`;
+Teste 9: `Hora atual: $ !`
+Teste 10: `Hora atual: ${agora} horas!`
+Teste 11: `Hora atual: ${$agora} horas n'agua!`
+Teste 12: a = 2; /* Um comentario */
+Teste 13: a = 2; /* Um comentario */ // outro */
+Teste 14: /* Texto + / * a */

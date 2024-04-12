@@ -1,0 +1,559 @@
+Failed tests
+Test 1: Tokens, identificadores e operadores
+Test 2: identificadores invalidos (criar um padrão para o erro, imprimir uma mensagem e não chamar return)
+Test 3: Números
+Test 4: Operadores compostos
+Test 5: Strings
+Test 6: Strings
+Test 7: Strings
+Test 8: Strings
+Test 9: Strings e expressões
+Test 10: Strings e expressões
+Test 11: Strings e expressões
+Test 12: Comentarios
+Test 13: Não juntar comentarios
+Test 14: Comentario com caracteres * e /
+Test 1: Tokens, identificadores e operadores
+Incorrect program output
+--- Input ---
+if ( a5 > $bba + _1 )
+
+--- Program output ---
+105
+102
+40
+97
+53
+62
+36
+98
+98
+97
+43
+95
+49
+41
+
+--- Expected output (exact text)---
+258 if
+40 (
+256 a5
+62 >
+256 $bba
+43 +
+256 _1
+41 )
+
+Test 2: identificadores invalidos (criar um padrão para o erro, imprimir uma mensagem e não chamar return)
+Incorrect program output
+--- Input ---
+a$ $$ $ $_$
+
+--- Program output ---
+97
+36
+36
+36
+36
+36
+95
+36
+
+--- Expected output (exact text)---
+Erro: Identificador invalido: a$
+Erro: Identificador invalido: $$
+256 $
+Erro: Identificador invalido: $_$
+
+Test 3: Números
+Incorrect program output
+--- Input ---
+1 1.0 1.1 2.000001 10e-9 10.34e+9 0.4e31
+
+--- Program output ---
+49
+49
+46
+48
+49
+46
+49
+50
+46
+48
+48
+48
+48
+48
+49
+49
+48
+101
+45
+57
+49
+48
+46
+51
+52
+101
+43
+57
+48
+46
+52
+101
+51
+49
+
+--- Expected output (exact text)---
+259 1
+260 1.0
+260 1.1
+260 2.000001
+260 10e-9
+260 10.34e+9
+260 0.4e31
+
+Test 4: Operadores compostos
+Incorrect program output
+--- Input ---
+if( $_a >= 1e-5 )
+
+--- Program output ---
+105
+102
+40
+36
+95
+97
+62
+61
+49
+101
+45
+53
+41
+
+--- Expected output (exact text)---
+258 if
+40 (
+256 $_a
+261 >=
+260 1e-5
+41 )
+
+Test 5: Strings
+Incorrect program output
+--- Input ---
+ a $_ $ = "Um texto";
+
+--- Program output ---
+97
+36
+95
+36
+61
+34
+85
+109
+116
+101
+120
+116
+111
+34
+59
+
+--- Expected output (exact text)---
+256 a
+256 $_
+256 $
+61 =
+265 Um texto
+59 ;
+
+Test 6: Strings
+Incorrect program output
+--- Input ---
+ $ = "Uma String" "outra\t string" "d'ouro";
+
+--- Program output ---
+36
+61
+34
+85
+109
+97
+83
+116
+114
+105
+110
+103
+34
+34
+111
+117
+116
+114
+97
+92
+116
+115
+116
+114
+105
+110
+103
+34
+34
+100
+39
+111
+117
+114
+111
+34
+59
+
+--- Expected output (exact text)---
+256 $
+61 =
+265 Uma String
+265 outra\t string
+265 d'ouro
+59 ;
+
+Test 7: Strings
+Incorrect program output
+--- Input ---
+ a = "Um \"texto" 'd\'agua' 'd''ouro " ""';
+
+--- Program output ---
+97
+61
+34
+85
+109
+92
+34
+116
+101
+120
+116
+111
+34
+39
+100
+92
+39
+97
+103
+117
+97
+39
+39
+100
+39
+39
+111
+117
+114
+111
+34
+34
+34
+39
+59
+
+--- Expected output (exact text)---
+256 a
+61 =
+265 Um "texto
+265 d'agua
+265 d'ouro " ""
+59 ;
+
+Test 8: Strings
+Incorrect program output
+--- Input ---
+ a = "Um ""texto \o/ //\\/* */" ;
+`  string ' "/*" '
+*/ //
+`;
+
+
+--- Program output ---
+97
+61
+34
+85
+109
+34
+34
+116
+101
+120
+116
+111
+92
+111
+47
+47
+47
+92
+92
+47
+42
+42
+47
+34
+59
+96
+115
+116
+114
+105
+110
+103
+39
+34
+47
+42
+34
+39
+42
+47
+47
+47
+96
+59
+
+--- Expected output (exact text)---
+256 a
+61 =
+265 Um "texto \o/ //\\/* */
+59 ;
+266   string ' "/*" '
+*/ //
+
+59 ;
+
+Test 9: Strings e expressões
+Incorrect program output
+--- Input ---
+`Hora atual: $ !`
+
+--- Program output ---
+96
+72
+111
+114
+97
+97
+116
+117
+97
+108
+58
+36
+33
+96
+
+--- Expected output (exact text)---
+266 Hora atual: $ !
+
+Test 10: Strings e expressões
+Incorrect program output
+--- Input ---
+`Hora atual: ${agora} horas!`
+
+--- Program output ---
+96
+72
+111
+114
+97
+97
+116
+117
+97
+108
+58
+36
+123
+97
+103
+111
+114
+97
+125
+104
+111
+114
+97
+115
+33
+96
+
+--- Expected output (exact text)---
+266 Hora atual:
+268 agora
+266  horas!
+
+Test 11: Strings e expressões
+Incorrect program output
+--- Input ---
+`Hora atual: ${$agora} horas n'agua!`
+
+--- Program output ---
+96
+72
+111
+114
+97
+97
+116
+117
+97
+108
+58
+36
+123
+36
+97
+103
+111
+114
+97
+125
+104
+111
+114
+97
+115
+110
+39
+97
+103
+117
+97
+33
+96
+
+--- Expected output (exact text)---
+266 Hora atual:
+268 $agora
+266  horas n'agua!
+
+Test 12: Comentarios
+Incorrect program output
+--- Input ---
+ a = 2; /* Um comentario */
+
+--- Program output ---
+97
+61
+50
+59
+47
+42
+85
+109
+99
+111
+109
+101
+110
+116
+97
+114
+105
+111
+42
+47
+
+--- Expected output (exact text)---
+256 a
+61 =
+259 2
+59 ;
+267 /* Um comentario */
+
+Test 13: Não juntar comentarios
+Incorrect program output
+--- Input ---
+ a = 2; /* Um comentario */ // outro */
+
+--- Program output ---
+97
+61
+50
+59
+47
+42
+85
+109
+99
+111
+109
+101
+110
+116
+97
+114
+105
+111
+42
+47
+47
+47
+111
+117
+116
+114
+111
+42
+47
+
+--- Expected output (exact text)---
+256 a
+61 =
+259 2
+59 ;
+267 /* Um comentario */
+267 // outro */
+
+Test 14: Comentario com caracteres * e /
+Incorrect program output
+--- Input ---
+/* Texto
++ / * a
+*/
+
+--- Program output ---
+47
+42
+84
+101
+120
+116
+111
+43
+47
+42
+97
+42
+47
+
+--- Expected output (text)---
+267 /* Texto
++ / * a
+*/
+
+
+Summary of tests
++------------------------------+
+| 14 tests run/ 0 tests passed |
++------------------------------+
