@@ -1,0 +1,448 @@
+Failed tests
+Test 1: print expressão numérica
+Test 2: print expressão com string
+Test 3: atribuição com texto
+Test 4: atribuição com expressões numéricas
+Test 5: atribuição com expressões numéricas e textuais
+Test 6: identificadores estranhos
+Test 7: função max
+Test 8: Fatorial
+Test 9: Exponenciação
+Test 10: Operador unário encadeado
+Test 11: função dtos
+Test 12: erro ao somar número com string
+Test 13: erro ao usar função não definida
+Test 14: Fatorial inexistente
+Test 15: Exponencial inexistente
+Test 1: print expressão numérica
+Incorrect program output
+--- Input ---
+print - 2 + 3*4.1;
+
+--- Program output ---
+=== Código ===
+=== Console ===
+=== Erro: Esperado um operando numérico, encontrado "print" ===
+=== Vars ===
+=== Pilha ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Código ===
+0 2 - 3 4.1 * + print #
+=== Console ===
+Num: 10.3
+=== Vars ===
+=== Pilha ===
+
+Test 2: print expressão com string
+Incorrect program output
+--- Input ---
+print """hello, " + "world" + "!\"";
+
+--- Program output ---
+=== Código ===
+=== Console ===
+=== Erro: Instrução ou operador inválido: ; ===
+=== Vars ===
+=== Pilha ===
+|Str: print"hello, world|
+|Str: !"|
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Código ===
+"""hello, " "world" + "!\"" + print #
+=== Console ===
+Str: "hello, world!"
+=== Vars ===
+=== Pilha ===
+
+Test 3: atribuição com texto
+Incorrect program output
+--- Input ---
+a = "hello, ";
+b = a + "world" + "!";
+print b;
+
+--- Program output ---
+=== Código ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Código ===
+a "hello, " = ^ b a @ "world" + "!" + = ^ b @ print #
+=== Console ===
+Str: hello, world!
+=== Vars ===
+|a ==> Str: hello, |
+|b ==> Str: hello, world!|
+=== Pilha ===
+
+Test 4: atribuição com expressões numéricas
+Incorrect program output
+--- Input ---
+a = 3.1 * 4 - 0.1;
+b = (a - 1)*(a + 1);
+print -b;
+
+--- Program output ---
+=== Código ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Código ===
+a 3.1 4 * 0.1 - = ^ b a @ 1 - a @ 1 + * = ^ 0 b @ - print #
+=== Console ===
+Num: -150.29
+=== Vars ===
+|a ==> Num: 12.3|
+|b ==> Num: 150.29|
+=== Pilha ===
+
+Test 5: atribuição com expressões numéricas e textuais
+Incorrect program output
+--- Input ---
+aba = "aba";
+cate = "cate";
+x1 = 10;
+y1 = 3.14;
+cc = aba + cate + "\\" + aba + cate;
+d = cc + cc;
+d = 1.0 / x1 + y1 - 0 * x1 * 2;
+
+--- Program output ---
+=== Código ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Código ===
+aba "aba" = ^ cate "cate" = ^ x1 10 = ^ y1 3.14 = ^ cc aba @ cate @ + "\\" + aba @ + cate @ + = ^ d cc @ cc @ + = ^ d 1.0 x1 @ / y1 @ + 0 x1 @ * 2 * - = ^
+=== Console ===
+=== Vars ===
+|aba ==> Str: aba|
+|cate ==> Str: cate|
+|cc ==> Str: abacate\abacate|
+|d ==> Num: 3.24|
+|x1 ==> Num: 10|
+|y1 ==> Num: 3.14|
+=== Pilha ===
+
+Test 6: identificadores estranhos
+Incorrect program output
+--- Input ---
+__ = 2;
+___ = 1.1;
+___ = __ + __ * ___;
+print __;
+
+--- Program output ---
+=== Código ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Código ===
+__ 2 = ^ ___ 1.1 = ^ ___ __ @ __ @ ___ @ * + = ^ __ @ print #
+=== Console ===
+Num: 2
+=== Vars ===
+|__ ==> Num: 2|
+|___ ==> Num: 4.2|
+=== Pilha ===
+
+Test 7: função max
+Incorrect program output
+--- Input ---
+x = 1.3;
+a1 = 2/((x+1)*(x-1));
+b1 = max( a1 * a1, x );
+print a1;
+print x;
+print b1;
+
+--- Program output ---
+=== Código ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Código ===
+x 1.3 = ^ a1 2 x @ 1 + x @ 1 - * / = ^ b1 a1 @ a1 @ * x @ max # = ^ a1 @ print # x @ print # b1 @ print #
+=== Console ===
+Num: 2.89855
+Num: 1.3
+Num: 8.4016
+=== Vars ===
+|a1 ==> Num: 2.89855|
+|b1 ==> Num: 8.4016|
+|x ==> Num: 1.3|
+=== Pilha ===
+
+Test 8: Fatorial
+Incorrect program output
+--- Input ---
+a = -8!;
+b = (2 * 2 + 1)!/3!;
+print b! / -a ^ 2;
+
+--- Program output ---
+=== Código ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Código ===
+a 0 8 fat # - = ^ b 2 2 * 1 + fat # 3 fat # / = ^ b @ fat # 0 a @ 2 power # - / print #
+=== Console ===
+Num: -1.49652e+09
+=== Vars ===
+|a ==> Num: -40320|
+|b ==> Num: 20|
+=== Pilha ===
+
+Test 9: Exponenciação
+Incorrect program output
+--- Input ---
+a = 2 ^ 9 ^ 0.5;
+b = 3.1 * a ^ a ^ (1/3!) + 1;
+print -b ^ 2!;
+
+--- Program output ---
+=== Código ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Código ===
+a 2 9 0.5 power # power # = ^ b 3.1 a @ a @ 1 3 fat # / power # power # * 1 + = ^ 0 b @ 2 fat # power # - print #
+=== Console ===
+Num: -3562.25
+=== Vars ===
+|a ==> Num: 8|
+|b ==> Num: 59.6846|
+=== Pilha ===
+
+Test 10: Operador unário encadeado
+Incorrect program output
+--- Input ---
+a = --( - 4 - 2 + 10 );
+print +-+---a!;
+
+--- Program output ---
+=== Código ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Código ===
+a 0 0 0 4 - 2 - 10 + - - = ^ 0 0 0 0 a @ fat # - - - - print #
+=== Console ===
+Num: 24
+=== Vars ===
+|a ==> Num: 4|
+=== Pilha ===
+
+Test 11: função dtos
+Incorrect program output
+--- Input ---
+x = "maior: ";
+a = - 2.1;
+b = 3.1;
+print x + dtos( max( a, b ) );
+
+--- Program output ---
+=== Código ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Código ===
+x "maior: " = ^ a 0 2.1 - = ^ b 3.1 = ^ x @ a @ b @ max # dtos # + print #
+=== Console ===
+Str: maior: 3.100000
+=== Vars ===
+|a ==> Num: -2.1|
+|b ==> Num: 3.1|
+|x ==> Str: maior: |
+=== Pilha ===
+
+Test 12: erro ao somar número com string
+Incorrect program output
+--- Input ---
+x = 1;
+y = "1";
+z = x + y;
+
+--- Program output ---
+=== Código ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Código ===
+x 1 = ^ y "1" = ^ z x @ y @ + = ^
+=== Console ===
+=== Erro: Esperado um operando string, encontrado 1.000000 ===
+=== Vars ===
+|x ==> Num: 1|
+|y ==> Str: 1|
+=== Pilha ===
+|Str: z|
+
+Test 13: erro ao usar função não definida
+Incorrect program output
+--- Input ---
+x = 1;
+y = 2;
+a = mdc( x, y );
+
+--- Program output ---
+=== Código ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Código ===
+x 1 = ^ y 2 = ^ a x @ y @ mdc # = ^
+=== Console ===
+=== Erro: Funcao não definida: mdc ===
+=== Vars ===
+|x ==> Num: 1|
+|y ==> Num: 2|
+=== Pilha ===
+|Str: a|
+|Num: 1|
+|Num: 2|
+
+Test 14: Fatorial inexistente
+Incorrect program output
+--- Input ---
+b = (-8)!;
+
+--- Program output ---
+=== Código ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Código ===
+b 0 8 - fat # = ^
+=== Console ===
+=== Erro: Fatorial somente está definido para n >= 0 ===
+=== Vars ===
+=== Pilha ===
+|Str: b|
+
+Test 15: Exponencial inexistente
+Incorrect program output
+--- Input ---
+a = 0;
+print a^(-0!);
+
+--- Program output ---
+=== Código ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+=== Console ===
+=== Erro: Tentou desempilhar mas a pilha está vazia ===
+=== Vars ===
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Código ===
+a 0 = ^ a @ 0 0 fat # - power # print #
+=== Console ===
+=== Erro: A potência de zero é indefinida para um expoente negativo ===
+=== Vars ===
+|a ==> Num: 0|
+=== Pilha ===
+
+Summary of tests
++------------------------------+
+| 15 tests run/ 0 tests passed |
++------------------------------+
+
