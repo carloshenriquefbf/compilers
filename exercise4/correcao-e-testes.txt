@@ -1,0 +1,682 @@
+Test 1: #1 asm
+Test 2: #2 Blocos e variáveis
+Test 3: #3 Variável duplicada
+Test 4: #4 Escopo
+Test 5: #5 Escopo
+Test 6: #6 Função sem parâmetros
+Test 7: #7 Função com parâmetros
+Test 8: #8 Função com parâmetros e var duplicada
+Test 9: #9 mdc
+Test 10: #10 função sem valor de retorno
+Test 11: #11 métodos
+Test 12: #12 argumentos
+Test 13: #13 Função com variáveis locais
+Test 14: #14 Função que se anula
+Test 15: #15 Função com parâmetros default
+Test 16: #16 Função com parâmetros default complicados
+Test 17: #17 Super teste
+Test 1: #1 asm
+Incorrect program output
+--- Input ---
+
+function log( msg ) {
+  msg asm{println # undefined};
+}
+
+let r = log( 'Hello, world!' );
+
+
+--- Program output ---
+
+Erro: a variável 'function' não foi declarada.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+
+--- Expected output (exact text)---
+
+=== Console ===
+Hello, world!
+=== Vars ===
+|{ log: { &funcao: ##; }; r: undefined; undefined: undefined; }|
+=== Pilha ===
+
+
+Test 2: #2 Blocos e variáveis
+Incorrect program output
+--- Input ---
+
+const a = 9;
+function log( msg ) {
+  msg asm{println # undefined};
+}
+
+var c = [
+];
+(log)( c );
+{ let a = 3.1; }
+{ const a = 8;
+  let b = 7;
+  c = b; }
+var c = c+ c++;
+
+
+--- Program output ---
+
+Erro: a variável 'function' não foi declarada.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+
+--- Expected output (exact text)---
+
+=== Console ===
+[ ]
+=== Vars ===
+|{ a: 9; c: 14; log: { &funcao: ##; }; undefined: undefined; }|
+=== Pilha ===
+
+
+Test 3: #3 Variável duplicada
+Incorrect program output
+--- Input ---
+
+let b, c;
+{ const a = 0;
+  var c;
+}
+let a = 8;
+if( a ) {[];}
+else {
+  let b, d = { };
+}
+let d;
+let a;
+
+
+--- Program output ---
+
+Erro: a variável 'c' ja foi declarada na linha 1.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+
+--- Expected output (exact text)---
+
+Erro: a variável 'a' já foi declarada na linha 5.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+
+Test 4: #4 Escopo
+Incorrect program output
+--- Input ---
+
+function print(x) { x asm{println # undefined};
+}
+var a, b = [];
+const c = -1;
+print( c + c );
+(b)[0] = true;
+if( b[0] ) {
+  let b = { };
+  (b).m = 9;
+  print( b );
+  a = b.m;
+}
+
+
+--- Program output ---
+
+Erro: a variável 'function' não foi declarada.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+
+--- Expected output (exact text)---
+
+=== Console ===
+-2
+{ m: 9; }
+=== Vars ===
+|{ a: 9; b: [ 0: true; ]; c: -1; print: { &funcao: ##; }; undefined: undefined; }|
+=== Pilha ===
+
+
+Test 5: #5 Escopo
+Incorrect program output
+--- Input ---
+
+var a, b = [];
+const c = -1;
+b[0] = true;
+function print(x) { x asm{println # undefined};
+  0 asm{undefined .};
+  return 0;
+}
+if( b[0] ) { let a = -1; {
+   let b = { };
+    b.m = 9;
+    print( b );
+  }
+  a = b;
+}
+
+
+--- Program output ---
+
+Erro: a variável 'true' não foi declarada.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+
+--- Expected output (exact text)---
+
+=== Console ===
+{ m: 9; }
+=== Vars ===
+|{ a: undefined; b: [ 0: true; ]; c: -1; print: { &funcao: ##; }; undefined: undefined; }|
+|{ a: -1; }|
+|{ b: { m: 9; }; }|
+|{ &retorno: ##; arguments: [ 0: { m: 9; }; ]; x: { m: 9; }; }|
+=== Pilha ===
+|0|
+|undefined|
+
+
+Test 6: #6 Função sem parâmetros
+Incorrect program output
+--- Input ---
+
+let str = "hello";
+function valor() { return str + ", world"; }
+var a = valor();
+str = "HELLO";;;
+var b = valor
+(
+)
+;
+
+
+--- Program output ---
+
+Erro: a variável 'function' não foi declarada.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+
+--- Expected output (exact text)---
+
+=== Console ===
+=== Vars ===
+|{ a: hello, world; b: HELLO, world; str: HELLO; undefined: undefined; valor: { &funcao: ##; }; }|
+=== Pilha ===
+
+
+Test 7: #7 Função com parâmetros
+Incorrect program output
+--- Input ---
+
+function sqr(x) { return x*x + y; }
+let y = 0.01, a = sqr( 5.2, 7 );
+
+
+--- Program output ---
+
+Erro: a variável 'function' não foi declarada.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+
+--- Expected output (exact text)---
+
+=== Console ===
+=== Vars ===
+|{ a: 27.05; sqr: { &funcao: ##; }; undefined: undefined; y: 0.01; }|
+=== Pilha ===
+
+
+Test 8: #8 Função com parâmetros e var duplicada
+Incorrect program output
+--- Input ---
+
+function f( x, y, z ) {
+  let z;
+  return x*x + y;
+}
+let f( 5.2, 7 );
+
+
+--- Program output ---
+
+Erro: a variável 'function' não foi declarada.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+
+--- Expected output (exact text)---
+
+Erro: a variável 'z' já foi declarada na linha 1.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+
+Test 9: #9 mdc
+Incorrect program output
+--- Input ---
+
+function mdc( a, b ) {
+  if( b == 0 )
+    return a;
+  else
+    return mdc( b, a % b );
+}
+
+let a = mdc( 24, 33, 8  );
+
+
+--- Program output ---
+
+Erro: a variável 'function' não foi declarada.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+
+--- Expected output (exact text)---
+
+=== Console ===
+=== Vars ===
+|{ a: 3; mdc: { &funcao: ##; }; undefined: undefined; }|
+=== Pilha ===
+
+
+Test 10: #10 função sem valor de retorno
+Incorrect program output
+--- Input ---
+
+function teste( a, b ) {
+  if( a > b )
+    return a;
+}
+
+let um = teste( 3, 4 ),
+    dois = teste( 4, 3 );
+
+
+--- Program output ---
+
+Erro: a variável 'function' não foi declarada.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+
+--- Expected output (exact text)---
+
+=== Console ===
+=== Vars ===
+|{ dois: 4; teste: { &funcao: ##; }; um: undefined; undefined: undefined; }|
+=== Pilha ===
+
+
+Test 11: #11 métodos
+Incorrect program output
+--- Input ---
+
+let console = { };
+let Number =  {
+};
+
+function log( msg ) {
+  msg asm{println # undefined};
+}
+
+function number_to_string( msg ) {
+  msg asm{to_string # '&retorno' @ ~};
+};
+
+console.log = log;
+Number.toString = number_to_string;
+
+let a = "Saida: ";
+let b = 3.14;
+
+console.log( a + Number.toString( b ) );
+
+
+--- Program output ---
+
+Erro: a variável 'function' não foi declarada.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+
+--- Expected output (text)---
+
+=== Console ===
+Saida: 3.14
+=== Vars ===
+|{ Number: { toString: { &funcao: ##; }; }; a: Saida: ; b: 3.14; console: { log: { &funcao: ##; }; }; log: { &funcao: ##; }; number_to_string: { &funcao: ##; }; undefined: undefined; }|
+=== Pilha ===
+"
+
+
+Test 12: #12 argumentos
+Incorrect program output
+--- Input ---
+
+let console = {};
+
+function exit( n ) {
+  'Codigo de erro: ' asm{print # undefined};
+  n asm{println # undefined};
+  0 asm{.};
+}
+
+function teste( a, b, c ) {
+  exit( b );
+}
+
+let a = "Saida: ";
+let b = 3.14;
+
+console.teste = {};
+console.teste.log = [
+] ;
+console.teste.log[1] = teste;
+
+console.teste.log[1]( a, b, "5" );
+
+
+--- Program output ---
+
+Erro: a variável 'function' não foi declarada.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+
+--- Expected output (exact text)---
+
+=== Console ===
+Codigo de erro: 3.14
+=== Vars ===
+|{ a: Saida: ; b: 3.14; console: { teste: { log: [ 0: undefined; 1: { &funcao: ##; }; ]; }; }; exit: { &funcao: ##; }; teste: { &funcao: ##; }; undefined: undefined; }|
+|{ &retorno: ##; a: Saida: ; arguments: [ 0: Saida: ; 1: 3.14; 2: 5; ]; b: 3.14; c: 5; }|
+|{ &retorno: ##; arguments: [ 0: 3.14; ]; n: 3.14; }|
+=== Pilha ===
+|0|
+
+
+Test 13: #13 Função com variáveis locais
+Incorrect program output
+--- Input ---
+
+function f( x ) {
+  let b = 5 * x;
+  let c = { };
+
+  c.num = b;
+  (c).arr = [];
+  (c.arr)[1] = 0;
+  return c ;
+}
+
+let res = f( 11 );
+
+
+--- Program output ---
+
+Erro: a variável 'function' não foi declarada.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+
+--- Expected output (exact text)---
+
+=== Console ===
+=== Vars ===
+|{ f: { &funcao: ##; }; res: { arr: [ 0: undefined; 1: 0; ]; num: 55; }; undefined: undefined; }|
+=== Pilha ===
+
+
+Test 14: #14 Função que se anula
+Incorrect program output
+--- Input ---
+
+function f( x ) {
+  let b = f;
+  const h = [ ];
+  f = x;
+  return b ;
+}
+
+let a;
+let g = f( a = [ ], {
+} );
+
+
+--- Program output ---
+
+Erro: a variável 'function' não foi declarada.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+
+--- Expected output (exact text)---
+
+=== Console ===
+=== Vars ===
+|{ a: [ ]; f: [ ]; g: { &funcao: ##; }; undefined: undefined; }|
+=== Pilha ===
+
+
+Test 15: #15 Função com parâmetros default
+Incorrect program output
+--- Input ---
+
+
+function f( x = 9, y = 8.1 ) {
+  log( 'Parametros: ' ); log( x ); log( ' ' ); log( y, true );
+  return x + y;
+}
+
+function log( msg = 'Default!', pular_linha = false ) {
+  if( pular_linha )
+    msg asm{println # undefined};
+  else
+    msg asm{print # undefined};
+}
+
+log();
+log( '-', true );
+log( f(), true );
+log( 'F = ' + f(), true );
+let x = f(),
+    a = f( 1 ),
+    b = f( false, 8 ),
+    c = f( 1, 2 );
+
+
+--- Program output ---
+
+Erro: a variável 'function' não foi declarada.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+
+--- Expected output (exact text)---
+
+=== Console ===
+Default!-
+Parametros: 9 8.1
+17.1
+Parametros: 9 8.1
+Default!
+Parametros: 9 8.1
+Parametros: 1 8.1
+Parametros: false 8
+Parametros: 1 2
+=== Vars ===
+|{ a: 9.1; b: undefined; c: 3; f: { &funcao: ##; }; log: { &funcao: ##; }; undefined: undefined; x: 17.1; }|
+=== Pilha ===
+
+
+Test 16: #16 Função com parâmetros default complicados
+Incorrect program output
+--- Input ---
+
+function log( msg = 'Default!', pular_linha = f() ) {
+  if( pular_linha )
+    msg asm{println # undefined};
+  else
+    msg asm{print # undefined};
+}
+
+function f( a = f( 1 ) ) {
+  log( 'Parametro a: ', false ); log( ' ', false ); log( a, true );
+  if( a == true )
+    return false;
+  else
+    return a == 1;
+}
+
+log( f() );
+log( ' ', true );
+log( f( 2 ), true );
+let a = f();
+
+
+--- Program output ---
+
+Erro: a variável 'function' não foi declarada.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+
+--- Expected output (exact text)---
+
+=== Console ===
+Parametro a:  1
+Parametro a:  true
+Parametro a:  1
+Parametro a:  true
+false
+Parametro a:  2
+false
+Parametro a:  1
+Parametro a:  true
+=== Vars ===
+|{ a: false; f: { &funcao: ##; }; log: { &funcao: ##; }; undefined: undefined; }|
+=== Pilha ===
+
+
+Test 17: #17 Super teste
+Incorrect program output
+--- Input ---
+
+function getNome( obj ) { return obj.nome; }
+
+function getClass( obj ) { return obj.class; }
+
+function criaAluno( nome, celular, email ) {
+  let aluno = {};
+
+  aluno.nome = nome;
+  aluno.celular = celular;
+  aluno.email = email;
+  aluno.super = prototipoAluno;
+  aluno.getNome = getNome;
+
+  return aluno;
+}
+
+function log( msg ) {
+  msg asm{println # undefined};
+}
+
+function invoke( obj, metodo ) {
+  if( toString( obj[metodo] ) == 'undefined' )
+    return obj.super[metodo]( obj.super );
+  else
+    return obj[metodo]( obj );
+}
+
+function toString( msg ) {
+  msg asm{to_string # '&retorno' @ ~};
+}
+
+let prototipoAluno = { };
+
+prototipoAluno.class = 'Classe Aluno';
+prototipoAluno.getClass = getClass;
+
+let joao = criaAluno( 'Joao', '123456', 'eu@aqui.com' );
+let maria = criaAluno( 'Maria', '123457', 'voce@la.com' );
+
+log( invoke( joao, 'getNome' ) );
+log( invoke( joao, 'getClass' ) );
+log( invoke( maria, 'getNome' ) );
+log( invoke( maria, 'getClass' ) );
+
+
+--- Program output ---
+
+Erro: a variável 'function' não foi declarada.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+
+--- Expected output (exact text)---
+
+=== Console ===
+Joao
+Classe Aluno
+Maria
+Classe Aluno
+=== Vars ===
+|{ criaAluno: { &funcao: ##; }; getClass: { &funcao: ##; }; getNome: { &funcao: ##; }; invoke: { &funcao: ##; }; joao: { celular: 123456; email: eu@aqui.com; getNome: { &funcao: ##; }; nome: Joao; super: { class: Classe Aluno; getClass: { &funcao: ##; }; }; }; log: { &funcao: ##; }; maria: { celular: 123457; email: voce@la.com; getNome: { &funcao: ##; }; nome: Maria; super: { class: Classe Aluno; getClass: { &funcao: ##; }; }; }; prototipoAluno: { class: Classe Aluno; getClass: { &funcao: ##; }; }; toString: { &funcao: ##; }; undefined: undefined; }|
+=== Pilha ===
+
+
+Summary of tests
+
++------------------------------+
+| 17 tests run/ 0 tests passed |
++------------------------------+
