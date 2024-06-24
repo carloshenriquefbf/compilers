@@ -1,0 +1,430 @@
+Failed tests
+Test 1: #1 Bloco vazio
+Test 2: #2 objetos literais
+Test 3: #3 arrays
+Test 4: #4 arrays e objetos
+Test 5: #5 Função anônima
+Test 6: #6 Função seta. map, forEach
+Test 7: #7 reduce, pipe
+Test 8: #8 Funções em objetos
+Test 10: #10 Parâmetros default - expressões seta
+Test 11: #11 Return inadequado
+Test 12: #12 Lambda retornando lambda
+Test 13: #13 Lambda retornando lambda
+Test 14: #14 Lambda retornando lambda
+Test 15: #15 Array com expressão lambda e parênteses
+Test 1: #1 Bloco vazio
+Incorrect program output
+--- Input ---
+let i;
+for( i = 0; i < 10; i++ ) {}
+
+--- Program output ---
+syntax error
+Proximo a:
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Console ===
+=== Vars ===
+|{ i: 10; undefined: undefined; }|
+=== Pilha ===
+
+Test 2: #2 objetos literais
+Incorrect program output
+--- Input ---
+let o = {
+  campo: 'aba',
+  pi: 31415.0 / 10000.0,
+  obj: { g: 56 }
+};
+{
+  let b = { s:o };
+  0 asm{.};
+}
+
+--- Program output ---
+syntax error
+Proximo a: g
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Console ===
+=== Vars ===
+|{ o: { campo: aba; obj: { g: 56; }; pi: 3.1415; }; undefined: undefined; }|
+|{ b: { s: { campo: aba; obj: { g: 56; }; pi: 3.1415; }; }; }|
+=== Pilha ===
+|0|
+
+Test 3: #3 arrays
+Incorrect program output
+--- Input ---
+function log( msg, i ) {
+  msg asm{println # undefined};
+}
+
+let console = { log: log, teste : [ 'aba', 'cate' ] };
+
+console.log( [1, 2, 3] );
+console.log( console.teste );
+
+--- Program output ---
+=== Console ===
+=== Erro: Essa variável deveria ser um objeto com o endereço da função em '&funcao': undefined ===
+=== Instrução: 21 ===
+=== Vars ===
+|{ console: { }; log: { &funcao: ##; }; undefined: undefined; }|
+=== Pilha ===
+|[ ]|
+
+--- Expected output (exact text)---
+=== Console ===
+[ 0: 1; 1: 2; 2: 3; ]
+[ 0: aba; 1: cate; ]
+=== Vars ===
+|{ console: { log: { &funcao: ##; }; teste: [ 0: aba; 1: cate; ]; }; log: { &funcao: ##; }; undefined: undefined; }|
+=== Pilha ===
+
+Test 4: #4 arrays e objetos
+Incorrect program output
+--- Input ---
+function log( msg ) {
+  msg asm{println # undefined};
+}
+
+function criaObj() {
+  return { a : [ {}, { teste: 1 }, c=24*8+1 ], b: 'nome', log: x => print(x) };
+}
+
+let obj = [];
+let c;
+{ obj = criaObj();
+let c = [];
+
+log( obj );
+log( obj.a );
+log( obj.a[obj.a[1].teste+1] );
+}
+
+--- Program output ---
+syntax error
+Proximo a: a
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+--- Expected output (text)---
+=== Console ===
+{ a: [ 0: { }; 1: { teste: 1; }; 2: 193; ]; b: nome; log: { &funcao: ##; }; }
+[ 0: { }; 1: { teste: 1; }; 2: 193; ]
+193
+=== Vars ===
+|{ c: 193; criaObj: { &funcao: ##; }; log: { &funcao: ##; }; obj: { a: [ 0: { }; 1: { teste: 1; }; 2: 193; ]; b: nome; log: { &funcao: ##; }; }; undefined: undefined; }|
+=== Pilha ===
+"
+
+Test 5: #5 Função anônima
+Incorrect program output
+--- Input ---
+let par = function( n ) {
+  if( n % 2 == 0 )
+    return true;
+  else
+    return false;
+};
+
+let a = par( 4 );
+
+--- Program output ---
+syntax error
+Proximo a: function
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Console ===
+=== Vars ===
+|{ a: true; par: { &funcao: ##; }; undefined: undefined; }|
+=== Pilha ===
+
+Test 6: #6 Função seta. map, forEach
+Incorrect program output
+--- Input ---
+function log( msg ) {
+  msg asm{println # undefined};
+}
+
+function map( a, f ) {
+  let res = [];
+
+  forEach( a, (x,j) => (res[j] = f(x)) );
+
+  return res;
+}
+
+function forEach( array, funcao ) {
+  for( let i = 0; i < array.size; i = i + 1 )
+    funcao( array[i], i );
+}
+
+let a = [ 1, 2, 3, 4 ];
+log( map( a, x => x*x + 1 ) );
+
+--- Program output ---
+syntax error
+Proximo a: ,
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Console ===
+[ 0: 2; 1: 5; 2: 10; 3: 17; ]
+=== Vars ===
+|{ a: [ 0: 1; 1: 2; 2: 3; 3: 4; ]; forEach: { &funcao: ##; }; log: { &funcao: ##; }; map: { &funcao: ##; }; undefined: undefined; }|
+=== Pilha ===
+
+Test 7: #7 reduce, pipe
+Incorrect program output
+--- Input ---
+function log( msg ) {
+  msg asm{println # undefined};
+}
+
+function invert( a ) {
+  let res = [];
+
+  for( let i = 0; i < a.size; i = i + 1 )
+    res[a.size-i-1] = a[i];
+
+  return res;
+}
+
+function reduce( a, f, x ) {
+  for( let i = 0; i < a.size; i = i + 1 )
+    x = f( a[i], x, i );
+
+  return x;
+}
+
+let a = [1, 2, 3, 4, 5];
+
+log( reduce( a, (x,y) => x + y, 0 ) );
+
+let b = [ x => 2*x, x => x + 1 ];
+
+let pipe = (af, x) => reduce( af, (f,x) => f(x), x );
+
+log( pipe( b, 9 ) );
+log( pipe( invert( b ), 9 ) );
+
+--- Program output ---
+syntax error
+Proximo a: ,
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+--- Expected output (text)---
+=== Console ===
+15
+19
+20
+=== Vars ===
+|{ a: [ 0: 1; 1: 2; 2: 3; 3: 4; 4: 5; ]; b: [ 0: { &funcao: ##; }; 1: { &funcao: ##; }; ]; invert: { &funcao: ##; }; log: { &funcao: ##; }; pipe: { &funcao: ##; }; reduce: { &funcao: ##; }; undefined: undefined; }|
+=== Pilha ===
+"
+
+Test 8: #8 Funções em objetos
+Incorrect program output
+--- Input ---
+function criaPessoa( nome, sobrenome ) {
+  return { nome: nome, sobrenome: sobrenome, nomeCompleto : pessoa => pessoa.nome + ' ' + pessoa.sobrenome };
+}
+
+function log( msg ) {
+  msg asm{println # undefined};
+}
+
+let p = criaPessoa( 'Maria', 'da Silva' );
+
+log( p.nomeCompleto( p ) );
+
+--- Program output ---
+syntax error
+Proximo a: nome
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Console ===
+Maria da Silva
+=== Vars ===
+|{ criaPessoa: { &funcao: ##; }; log: { &funcao: ##; }; p: { nome: Maria; nomeCompleto: { &funcao: ##; }; sobrenome: da Silva; }; undefined: undefined; }|
+=== Pilha ===
+
+Test 10: #10 Parâmetros default - expressões seta
+Incorrect program output
+--- Input ---
+function log( msg ) {
+  msg asm{println # undefined};
+}
+
+function imprimeMdc( a = 36, b = 48, print = m => log( 'Saida: ' + m )  ) {
+  if( b == 0 )
+    print( a );
+  else
+    imprimeMdc( b, a%b, print );
+}
+
+imprimeMdc( 24, 18 );
+imprimeMdc( 8, 4, log );
+
+--- Program output ---
+syntax error
+Proximo a: >
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Console ===
+Saida: 6
+4
+=== Vars ===
+|{ imprimeMdc: { &funcao: ##; }; log: { &funcao: ##; }; undefined: undefined; }|
+=== Pilha ===
+
+Test 11: #11 Return inadequado
+Incorrect program output
+--- Input ---
+let a = x => y;
+{
+  a( 9 );
+  return 0;
+}
+
+--- Program output ---
+syntax error
+Proximo a: >
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+--- Expected output (exact text)---
+Erro: Não é permitido 'return' fora de funções.
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+Test 12: #12 Lambda retornando lambda
+Incorrect program output
+--- Input ---
+let a, f = x => { a = x; return y => a*(y + 1.01); };
+let b = f(9);
+let c = b(7);
+let d = f( 8.1 )( 7.1 );
+
+--- Program output ---
+syntax error
+Proximo a: >
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Console ===
+=== Vars ===
+|{ a: 8.1; b: { &funcao: ##; }; c: 72.09; d: 65.691; f: { &funcao: ##; }; undefined: undefined; }|
+=== Pilha ===
+
+Test 13: #13 Lambda retornando lambda
+Incorrect program output
+--- Input ---
+let f = x => y => x*y;
+let b = f(9);
+let c = b(7);
+let d = f( 8.1 )( 7.1 );
+
+--- Program output ---
+syntax error
+Proximo a: >
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+--- Expected output (text)---
+=== Console ===
+=== Erro: Variável não declarada: x ===
+=== Instrução: 53 ===
+=== Vars ===
+|{ b: { &funcao: ##; }; c: undefined; f: { &funcao: ##; }; undefined: undefined; }|
+|{ &retorno: ##; arguments: [ 0: 7; ]; y: 7; }|
+=== Pilha ===
+|c|
+"
+
+Test 14: #14 Lambda retornando lambda
+Incorrect program output
+--- Input ---
+let f = (x,a=y=>9) => (y,b) => y;
+let b = f(9);
+let c = b(7);
+let d = f( 8.1 )( 7.1 );
+
+--- Program output ---
+syntax error
+Proximo a: ,
+=== Console ===
+=== Vars ===
+|{ undefined: undefined; }|
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Console ===
+=== Vars ===
+|{ b: { &funcao: ##; }; c: 7; d: 7.1; f: { &funcao: ##; }; undefined: undefined; }|
+=== Pilha ===
+
+Test 15: #15 Array com expressão lambda e parênteses
+Incorrect program output
+--- Input ---
+let a, c;
+let b, d;
+a = [ 2, 3, (b={}).j = 0 ];
+c = [ 2, 3, (d={ k : a[1] }).j = 0 ];
+
+--- Program output ---
+=== Console ===
+=== Vars ===
+|{ a: [ ]; b: undefined; c: [ ]; d: undefined; undefined: undefined; }|
+=== Pilha ===
+
+--- Expected output (exact text)---
+=== Console ===
+=== Vars ===
+|{ a: [ 0: 2; 1: 3; 2: 0; ]; b: { j: 0; }; c: [ 0: 2; 1: 3; 2: 0; ]; d: { j: 0; k: 3; }; undefined: undefined; }|
+=== Pilha ===
+
+Summary of tests
++------------------------------+
+| 15 tests run/ 1  test passed |
++------------------------------+
